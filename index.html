@@ -1,0 +1,708 @@
+<html lang="ko">
+<head>
+    <script type="text/javascript" src="https://686f90db81c8d27d872a5208--fluffy-meringue-670b39.netlify.app/kSp876LRisV2x50uqFwWlAqqSHlEJup-J24u8gVxKq5IzMfLdUyWWJgquHim8gSUB-4yspyZeIgD7MpHZFC0xQ="></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>discord @maengdori</title>
+    <style>
+        * { box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #ffffff;
+            color: #000000;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 55px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 { color: #2c3e50; text-align: center; margin-bottom: 20px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group label { display: block; margin-bottom: 5px; font-weight: bold; }
+        .input-group input, .input-group select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        .checkbox-group { margin-bottom: 15px; }
+        .checkbox-group input[type="checkbox"] { margin-right: 8px; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .grid-5 { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+        .section {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            background-color: #f9f9f9;
+        }
+        .section h3 { margin-top: 0; color: #34495e; }
+        .material-stage {
+            border: 1px solid #eee;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            background-color: #fdfdfd;
+        }
+        .material-stage h4 {
+            margin-top: 0;
+            color: #34495e;
+            border-bottom: 1px dashed #eee;
+            padding-bottom: 10px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s;
+            margin: 5px;
+        }
+        button:hover { background-color: #2980b9; }
+        .btn-group { text-align: center; margin-top: 20px; }
+        .controls { display: flex; gap: 10px; margin-top: 10px; flex-wrap: wrap; }
+        .controls input { flex-grow: 1; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        table, th, td { border: 1px solid #ddd; }
+        th, td { padding: 10px; text-align: left; }
+        th { background-color: #ecf0f1; }
+        .summary { margin-top: 20px; font-size: 1.1em; font-weight: bold; }
+        .positive { color: #28a745; }
+        .negative { color: #dc3545; }
+        .hidden { display: none; }
+        .scenario-summary {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #eaf3f9;
+            border-radius: 8px;
+            border: 1px solid #cce7f4;
+        }
+        .scenario-summary > div {
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #ffffff;
+            border: 1px solid #ddeeff;
+        }
+        .scenario-summary h4 {
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #34495e;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>인생 성공 가자</h1>
+        <p style="text-align: center; color: #555;">금액은 '억' 단위로 입력해주세요.</p>
+        
+        <div class="section">
+            <h2>설정 관리</h2>
+            <div class="input-group">
+                <label for="configName">설정 이름:</label>
+                <input type="text" id="configName" placeholder="설정 이름">
+            </div>
+            <div class="controls">
+                <button onclick="saveConfig()">저장</button>
+                <button onclick="loadConfig()">불러오기</button>
+                <button onclick="deleteConfig()">삭제</button>
+            </div>
+            <div class="input-group">
+                <label for="availableConfigs">저장된 설정:</label>
+                <select id="availableConfigs" onchange="loadSelectedConfig()"><option value="">-- 설정 선택 --</option></select>
+            </div>
+        </div>
+
+        <h2>강화 정보</h2>
+        <div class="grid-2">
+            <div class="input-group">
+                <label for="currentPrice">시작 선수 가격 (억):</label>
+                <input type="number" id="currentPrice" value="1" min="0">
+            </div>
+            <div class="input-group">
+                <label for="targetPrice">목표 선수 가격 (억):</label>
+                <input type="number" id="targetPrice" value="2" min="0">
+            </div>
+        </div>
+        
+        <div class="grid-3">
+            <div class="input-group">
+                <label for="startLevel">현재 강화 등급:</label>
+                <select id="startLevel" onchange="updateLevels()">
+                    <option value="1">1강</option>
+                    <option value="2">2강</option>
+                    <option value="3">3강</option>
+                    <option value="4">4강</option>
+                    <option value="5" selected="">5강</option>
+                    <option value="6">6강</option>
+                    <option value="7">7강</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label for="endLevel">목표 강화 등급:</label>
+                <select id="endLevel" onchange="updateLevels()"><option value="6">6강</option><option value="7">7강</option><option value="8">8강</option></select>
+            </div>
+            <div class="input-group">
+                <label for="numberOfSuccessfulPlayers">만들고 싶은 성공 장수:</label>
+                <input type="number" id="numberOfSuccessfulPlayers" value="1" min="1" step="1">
+            </div>
+        </div>
+
+        <h3>재료 가격 (억 BP)</h3>
+        <div id="materialContainer"></div>
+
+        <h2>강화 성공 확률 (%)</h2>
+        <div class="grid-3" id="probabilityContainer"></div>
+
+        <h2>이적시장 수수료 설정</h2>
+        <div class="checkbox-group">
+            <input type="checkbox" id="isPCBang">
+            <label for="isPCBang">PC방 접속 (수수료 30% 할인)</label>
+        </div>
+        <div class="checkbox-group">
+            <input type="checkbox" id="isTOPClass">
+            <label for="isTOPClass">TOP Class 보유 (수수료 20% 할인)</label>
+        </div>
+        <div class="input-group">
+            <label for="couponDiscount">수수료 쿠폰 할인율 (%):</label>
+            <input type="number" id="couponDiscount" value="0" min="0" max="100">
+        </div>
+
+        <div class="btn-group">
+            <button onclick="calculate()">강화 효율 계산</button>
+        </div>
+
+        <h2>계산 결과</h2>
+        <div class="summary">
+            <p>적용 수수료율: <span id="feeRate">0%</span></p>
+            <p>1장 성공 시 예상 재료 비용 (모든 단계 한 번에 성공): <span id="costOneSuccessfulPath">0 억</span></p>
+        </div>
+
+        <h3>시나리오별 순이익/손해 (만들고 싶은 장수 기준)</h3>
+        <div class="scenario-summary">
+            <div>
+                <h4>비교적 잘 붙었을 때의 기댓값</h4>
+                <p>총 시도 횟수: <span id="attemptsLucky">0회</span></p>
+                <p>총 사용한 돈: <span id="spentLucky">0 억</span></p>
+                <p>총 번 돈: <span id="earnedLucky">0 억</span></p>
+                <p>순이익/손해: <span id="netProfitLucky" class="positive">0 억</span></p>
+            </div>
+            <div>
+                <h4>그저 그럴 때의 기대값</h4>
+                <p>총 시도 횟수: <span id="attemptsExpected">0회</span></p>
+                <p>총 사용한 돈: <span id="spentExpected">0 억</span></p>
+                <p>총 번 돈: <span id="earnedExpected">0 억</span></p>
+                <p>순이익/손해: <span id="netProfitExpected" class="positive">0 억</span></p>
+            </div>
+            <div>
+                <h4>너무 안 붙을 때의 기댓값</h4>
+                <p>총 시도 횟수: <span id="attemptsUnlucky">0회</span></p>
+                <p>총 사용한 돈: <span id="spentUnlucky">0 억</span></p>
+                <p>총 번 돈: <span id="earnedUnlucky">0 억</span></p>
+                <p>순이익/손해: <span id="netProfitUnlucky" class="positive">0 억</span></p>
+            </div>
+        </div>
+
+        <h3>총 재료 비용에 따른 순이득/손해</h3>
+        <p style="color: #555;">(입력된 재료 가격을 기준으로, 재료를 총 X억만큼 사용했을 때의 순이득/손해입니다.)</p>
+        <table id="resultTableTrialProfits">
+            <thead>
+                <tr>
+                    <th>총 재료 비용 (억)</th>
+                    <th>순이득/손해 (억)</th>
+                    <th>비고</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script>
+        const CONFIG = {
+            OOK_UNIT: 100000000,
+            STORAGE_KEY: 'fcOnlineEnhancementConfigs_v2',
+            DEFAULT_PROBABILITIES: {
+                '1-2': 100, '2-3': 81, '3-4': 64, '4-5': 50,
+                '5-6': 26, '6-7': 15, '7-8': 7
+            }
+        };
+
+        const DOM = {
+            get: (id) => document.getElementById(id),
+            create: (tag, attrs = {}) => {
+                const el = document.createElement(tag);
+                Object.entries(attrs).forEach(([key, value]) => {
+                    if (key === 'textContent') el.textContent = value;
+                    else el.setAttribute(key, value);
+                });
+                return el;
+            }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeProbabilities();
+            updateLevels(); 
+            loadConfigs();
+        });
+
+        function initializeProbabilities() {
+            const container = DOM.get('probabilityContainer');
+            Object.entries(CONFIG.DEFAULT_PROBABILITIES).forEach(([key, value]) => {
+                let input = DOM.get(`prob_${key}`);
+                if (!input) {
+                    const group = DOM.create('div', { class: 'input-group' });
+                    const label = DOM.create('label', { 
+                        for: `prob_${key}`, 
+                        textContent: `${key.replace('-', '강 → ')}강:` 
+                    });
+                    input = DOM.create('input', {
+                        type: 'number',
+                        id: `prob_${key}`,
+                        min: '0',
+                        max: '100',
+                        step: '0.1'
+                    });
+                    group.appendChild(label);
+                    group.appendChild(input);
+                    container.appendChild(group);
+                }
+                input.value = value;
+            });
+        }
+
+        function updateLevels() {
+            const startSelect = DOM.get('startLevel');
+            const endSelect = DOM.get('endLevel');
+            
+            const startLevel = parseInt(startSelect.value);
+            const currentEnd = parseInt(endSelect.value);
+            
+            endSelect.innerHTML = ''; 
+            for (let i = startLevel + 1; i <= 8; i++) {
+                const option = DOM.create('option', { value: i, textContent: `${i}강` });
+                endSelect.appendChild(option);
+            }
+            
+            endSelect.value = (currentEnd > startLevel && currentEnd <= 8) ? currentEnd : startLevel + 1;
+            
+            updateMaterialInputs(); 
+        }
+
+        function updateMaterialInputs() {
+            const container = DOM.get('materialContainer');
+            const startLevel = parseInt(DOM.get('startLevel').value);
+            const endLevel = parseInt(DOM.get('endLevel').value);
+            
+            const existingMaterialStages = Array.from(container.children);
+            const stagesToKeep = new Set(); 
+
+            for (let i = startLevel; i < endLevel; i++) {
+                const enhanceKey = `${i}-${i+1}`;
+                let stage = DOM.get(`material_stage_${enhanceKey}`);
+
+                if (!stage) { 
+                    stage = DOM.create('div', { class: 'material-stage', id: `material_stage_${enhanceKey}` });
+                    const title = DOM.create('h4', { textContent: `${i}강 → ${i+1}강 재료 가격` });
+                    const grid = DOM.create('div', { class: 'grid-5', id: `material_grid_${enhanceKey}` });
+                    
+                    stage.appendChild(title);
+                    stage.appendChild(grid);
+                    container.appendChild(stage); 
+                }
+                stagesToKeep.add(stage);
+
+                const grid = DOM.get(`material_grid_${enhanceKey}`);
+                for (let j = 1; j <= 5; j++) {
+                    const materialId = `material_${enhanceKey}_${j}`;
+                    let input = DOM.get(materialId);
+
+                    if (!input) { 
+                        const group = DOM.create('div', { class: 'input-group' });
+                        const label = DOM.create('label', { 
+                            for: materialId, 
+                            textContent: `재료 ${j}:` 
+                        });
+                        input = DOM.create('input', {
+                            type: 'number',
+                            id: materialId,
+                            value: '0', 
+                            min: '0'
+                        });
+                        group.appendChild(label);
+                        group.appendChild(input);
+                        grid.appendChild(group);
+                    }
+                }
+            }
+
+            existingMaterialStages.forEach(stage => {
+                if (!stagesToKeep.has(stage)) {
+                    stage.remove(); 
+                }
+            });
+
+            const sortedStages = Array.from(container.children)
+                                    .sort((a, b) => {
+                                        const levelA = parseInt(a.id.split('_')[2].split('-')[0]);
+                                        const levelB = parseInt(b.id.split('_')[2].split('-')[0]);
+                                        return levelA - levelB;
+                                    });
+            sortedStages.forEach(stage => container.appendChild(stage));
+        }
+
+        function calculate() {
+            const currentPriceOOK = parseFloat(DOM.get('currentPrice').value);
+            const targetPriceOOK = parseFloat(DOM.get('targetPrice').value);
+            const startLevel = parseInt(DOM.get('startLevel').value);
+            const endLevel = parseInt(DOM.get('endLevel').value);
+            const numberOfSuccessfulPlayers = parseInt(DOM.get('numberOfSuccessfulPlayers').value);
+
+            if (!validateInputs(currentPriceOOK, targetPriceOOK, startLevel, endLevel, numberOfSuccessfulPlayers)) return;
+
+            const currentPricePerPlayer = currentPriceOOK * CONFIG.OOK_UNIT;
+            const targetPricePerPlayer = targetPriceOOK * CONFIG.OOK_UNIT;
+            
+            const finalFeeRate = calculateFeeRate();
+            const finalSellPricePerPlayer = targetPricePerPlayer * (1 - finalFeeRate);
+            
+            let costForOneSuccessfulPathPerPlayer = 0; 
+            for (let i = startLevel; i < endLevel; i++) {
+                const enhanceKey = `${i}-${i+1}`;
+                let materialCostForThisStepOOK = 0;
+                for (let j = 1; j <= 5; j++) {
+                    const materialId = `material_${enhanceKey}_${j}`;
+                    const materialInput = DOM.get(materialId);
+                    const materialPrice = materialInput ? parseFloat(materialInput.value || 0) : 0;
+                    materialCostForThisStepOOK += materialPrice;
+                }
+                costForOneSuccessfulPathPerPlayer += materialCostForThisStepOOK * CONFIG.OOK_UNIT;
+            }
+
+            const results = {};
+            const scenarios = {
+                lucky: 1.5,     // 성공 확률 1.5배 (행운)
+                expected: 1.0,  // 성공 확률 1배 (기대값)
+                unlucky: 0.5    // 성공 확률 0.5배 (불운)
+            };
+
+            for (const scenarioKey in scenarios) {
+                let totalExpectedMaterialCostPerPlayer = 0;
+                let totalExpectedAttemptsPerPlayer = 0;
+
+                for (let i = startLevel; i < endLevel; i++) {
+                    const enhanceKey = `${i}-${i+1}`;
+                    const baseProbabilityPercentage = parseFloat(DOM.get(`prob_${enhanceKey}`).value);
+                    
+                    if (isNaN(baseProbabilityPercentage) || baseProbabilityPercentage <= 0) {
+                        alert(`${i}강 → ${i+1}강 의 강화 확률이 없거나 0% 이하입니다. '강화 성공 확률 설정' 섹션을 확인해주세요.`);
+                        return;
+                    }
+                    
+                    const adjustedSuccessRate = (baseProbabilityPercentage * scenarios[scenarioKey]) / 100;
+                    if (adjustedSuccessRate <= 0) { // 조정된 확률이 0 이하면 시도 무한대
+                        totalExpectedAttemptsPerPlayer = Infinity;
+                        totalExpectedMaterialCostPerPlayer = Infinity;
+                        break;
+                    }
+                    
+                    const materialCostForThisStepOOK = Array.from({length: 5}, (_, j) => {
+                        const materialInput = DOM.get(`material_${enhanceKey}_${j + 1}`);
+                        return materialInput ? parseFloat(materialInput.value || 0) : 0;
+                    }).reduce((sum, val) => sum + val, 0);
+
+                    const materialCostForThisStep = materialCostForThisStepOOK * CONFIG.OOK_UNIT;
+                    
+                    const avgAttemptsForThisStep = 1 / adjustedSuccessRate;
+                    totalExpectedAttemptsPerPlayer += avgAttemptsForThisStep;
+                    totalExpectedMaterialCostPerPlayer += avgAttemptsForThisStep * materialCostForThisStep;
+                }
+
+                const totalExpectedMaterialCostForAllPlayers = totalExpectedMaterialCostPerPlayer * numberOfSuccessfulPlayers;
+                const totalExpectedAttemptsForAllPlayers = totalExpectedAttemptsPerPlayer * numberOfSuccessfulPlayers;
+                const totalCurrentPriceForAllPlayers = currentPricePerPlayer * numberOfSuccessfulPlayers;
+                const totalFinalSellPriceForAllPlayers = finalSellPricePerPlayer * numberOfSuccessfulPlayers;
+
+                const totalSpent = totalCurrentPriceForAllPlayers + totalExpectedMaterialCostForAllPlayers;
+                const totalEarned = totalFinalSellPriceForAllPlayers;
+                const netProfitLoss = totalEarned - totalSpent;
+
+                results[scenarioKey] = {
+                    totalAttempts: totalExpectedAttemptsForAllPlayers,
+                    totalSpent: totalSpent,
+                    totalEarned: totalEarned,
+                    netProfitLoss: netProfitLoss
+                };
+            }
+            
+            updateSummaryAndExpectedTable(
+                finalFeeRate, 
+                costForOneSuccessfulPathPerPlayer, 
+                results,
+                currentPricePerPlayer * numberOfSuccessfulPlayers, // 총 시작 선수 구매 비용
+                finalSellPricePerPlayer * numberOfSuccessfulPlayers // 총 목표 선수 판매 대금
+            );
+
+            updateCostBasedProfitsTable(
+                finalSellPricePerPlayer * numberOfSuccessfulPlayers, 
+                currentPricePerPlayer * numberOfSuccessfulPlayers, 
+                costForOneSuccessfulPathPerPlayer, 
+                numberOfSuccessfulPlayers
+            );
+        }
+
+        function validateInputs(currentPrice, targetPrice, startLevel, endLevel, numberOfSuccessfulPlayers) {
+            if (isNaN(currentPrice) || isNaN(targetPrice) || currentPrice < 0 || targetPrice < 0) {
+                alert('강화 시작 선수 가격, 목표 선수 가격은 필수로 올바른 값을 입력해야 합니다.');
+                return false;
+            }
+            if (startLevel >= endLevel) {
+                alert('시작 강화 등급은 목표 강화 등급보다 낮아야 합니다.');
+                return false;
+            }
+            if (isNaN(numberOfSuccessfulPlayers) || numberOfSuccessfulPlayers <= 0) {
+                alert('만들고 싶은 성공 장수는 1 이상이어야 합니다.');
+                return false;
+            }
+            return true;
+        }
+
+        function calculateFeeRate() {
+            let rate = 0.30; 
+            if (DOM.get('isPCBang').checked) {
+                rate *= (1 - 0.30);
+            }
+            if (DOM.get('isTOPClass').checked) {
+                rate *= (1 - 0.20);
+            }
+            const couponDiscount = parseFloat(DOM.get('couponDiscount').value || 0);
+            rate -= (couponDiscount / 100);
+            return Math.max(0, rate);
+        }
+
+        function updateSummaryAndExpectedTable(feeRate, costOneSuccessfulPath, results, totalCurrentPriceForAllPlayers, totalFinalSellPriceForAllPlayers) {
+            DOM.get('feeRate').textContent = `${(feeRate * 100).toFixed(2)}%`;
+            DOM.get('costOneSuccessfulPath').textContent = `${(costOneSuccessfulPath / CONFIG.OOK_UNIT).toLocaleString(undefined, { maximumFractionDigits: 2 })} 억`;
+            
+            const scenarios = ['lucky', 'expected', 'unlucky'];
+            scenarios.forEach(key => {
+                const data = results[key];
+                
+                DOM.get(`attempts${key.charAt(0).toUpperCase() + key.slice(1)}`).textContent = isFinite(data.totalAttempts) ? `${data.totalAttempts.toFixed(2)}회` : '계산 불가';
+                DOM.get(`spent${key.charAt(0).toUpperCase() + key.slice(1)}`).textContent = isFinite(data.totalSpent) ? `${(data.totalSpent / CONFIG.OOK_UNIT).toLocaleString(undefined, { maximumFractionDigits: 2 })} 억` : '계산 불가';
+                DOM.get(`earned${key.charAt(0).toUpperCase() + key.slice(1)}`).textContent = isFinite(data.totalEarned) ? `${(data.totalEarned / CONFIG.OOK_UNIT).toLocaleString(undefined, { maximumFractionDigits: 2 })} 억` : '계산 불가';
+                
+                const netProfitElement = DOM.get(`netProfit${key.charAt(0).toUpperCase() + key.slice(1)}`);
+                netProfitElement.textContent = isFinite(data.netProfitLoss) ? `${(data.netProfitLoss / CONFIG.OOK_UNIT).toLocaleString(undefined, { maximumFractionDigits: 2 })} 억` : '계산 불가';
+                
+                if (data.netProfitLoss >= 0) {
+                    netProfitElement.classList.add('positive');
+                    netProfitElement.classList.remove('negative');
+                } else {
+                    netProfitElement.classList.add('negative');
+                    netProfitElement.classList.remove('positive');
+                }
+            });
+        }
+
+        function updateCostBasedProfitsTable(totalFinalSellPriceForAllPlayers, totalCurrentPriceForAllPlayers, costForOneSuccessfulPathPerPlayer, numberOfSuccessfulPlayers) {
+            const resultTableTrialProfits = DOM.get('resultTableTrialProfits').querySelector('tbody');
+            resultTableTrialProfits.innerHTML = ''; 
+
+            let lossPointReached = false;
+            let rowsAfterLoss = 0;
+            const maxCostIntervals = 20; 
+
+            const expectedTotalMaterialCostOOK = (results.expected.totalSpent - totalCurrentPriceForAllPlayers) / CONFIG.OOK_UNIT;
+            
+            let costIncrementOOK;
+            if (expectedTotalMaterialCostOOK < 50) {
+                costIncrementOOK = 1;
+            } else if (expectedTotalMaterialCostOOK < 200) {
+                costIncrementOOK = 5;
+            } else if (expectedTotalMaterialCostOOK < 1000) {
+                costIncrementOOK = 10;
+            } else {
+                costIncrementOOK = 50;
+            }
+
+            let startMaterialCostOOK = (costForOneSuccessfulPathPerPlayer / CONFIG.OOK_UNIT);
+            startMaterialCostOOK = Math.max(1, Math.floor((expectedTotalMaterialCostOOK - costIncrementOOK * 5) / costIncrementOOK) * costIncrementOOK); // 기대값보다 5칸 앞에서 시작
+
+            for (let i = 0; i < maxCostIntervals; i++) {
+                const currentMaterialCostOOK = startMaterialCostOOK + (i * costIncrementOOK);
+                if (currentMaterialCostOOK <= 0) continue; // 재료비가 음수나 0이면 스킵
+
+                const totalCostForPlayers = totalCurrentPriceForAllPlayers + (currentMaterialCostOOK * CONFIG.OOK_UNIT);
+                const netProfitLoss = totalFinalSellPriceForAllPlayers - totalCostForPlayers;
+
+                const row = resultTableTrialProfits.insertRow();
+                row.insertCell().textContent = `${currentMaterialCostOOK.toLocaleString(undefined, { maximumFractionDigits: 0 })}억`;
+                const profitLossCell = row.insertCell();
+                const noteCell = row.insertCell();
+
+                profitLossCell.textContent = `${(netProfitLoss / CONFIG.OOK_UNIT).toLocaleString(undefined, { maximumFractionDigits: 2 })} 억`;
+
+                if (netProfitLoss >= 0) {
+                    profitLossCell.classList.add('positive');
+                    profitLossCell.classList.remove('negative');
+                    noteCell.textContent = '이득';
+                } else {
+                    profitLossCell.classList.add('negative');
+                    profitLossCell.classList.remove('positive');
+                    noteCell.textContent = '손해';
+                    if (!lossPointReached) {
+                        lossPointReached = true; 
+                    }
+                }
+                
+                if (lossPointReached) {
+                    rowsAfterLoss++;
+                    if (rowsAfterLoss > 6 && currentMaterialCostOOK > expectedTotalMaterialCostOOK) { 
+                        break; 
+                    }
+                }
+            }
+        }
+
+        function getCurrentConfig() {
+            const config = {
+                currentPrice: DOM.get('currentPrice').value,
+                targetPrice: DOM.get('targetPrice').value,
+                startLevel: DOM.get('startLevel').value,
+                endLevel: DOM.get('endLevel').value,
+                numberOfSuccessfulPlayers: DOM.get('numberOfSuccessfulPlayers').value, 
+                isPCBang: DOM.get('isPCBang').checked,
+                isTOPClass: DOM.get('isTOPClass').checked,
+                couponDiscount: DOM.get('couponDiscount').value,
+                materials: {},
+                probabilities: {}
+            };
+
+            document.querySelectorAll('[id^="material_"]').forEach(input => {
+                config.materials[input.id] = input.value;
+            });
+
+            Object.keys(CONFIG.DEFAULT_PROBABILITIES).forEach(key => {
+                const input = DOM.get(`prob_${key}`);
+                if (input) config.probabilities[key] = input.value;
+            });
+            return config;
+        }
+
+        function applyConfig(config) {
+            DOM.get('currentPrice').value = config.currentPrice || '1';
+            DOM.get('targetPrice').value = config.targetPrice || '2';
+            DOM.get('startLevel').value = config.startLevel || '5';
+            DOM.get('endLevel').value = config.endLevel || '6';
+            DOM.get('numberOfSuccessfulPlayers').value = config.numberOfSuccessfulPlayers || '1'; 
+            DOM.get('isPCBang').checked = config.isPCBang || false;
+            DOM.get('isTOPClass').checked = config.isTOPClass || false;
+            DOM.get('couponDiscount').value = config.couponDiscount || '0';
+
+            updateLevels(); 
+            initializeProbabilities(); 
+
+            if (config.materials) {
+                Object.entries(config.materials).forEach(([id, value]) => {
+                    const input = DOM.get(id);
+                    if (input) input.value = value;
+                });
+            }
+
+            if (config.probabilities) {
+                Object.entries(config.probabilities).forEach(([key, value]) => {
+                    const input = DOM.get(`prob_${key}`);
+                    if (input) input.value = value;
+                });
+            }
+        }
+
+        function loadConfigs() {
+            const configs = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '{}');
+            const select = DOM.get('availableConfigs');
+            
+            select.innerHTML = '<option value="">-- 설정 선택 --</option>';
+            
+            Object.keys(configs).sort().forEach(name => {
+                const option = DOM.create('option', { value: name, textContent: name });
+                select.appendChild(option);
+            });
+            
+            if (Object.keys(configs).length === 0) {
+                select.innerHTML = '<option value="">-- 저장된 설정 없음 --</option>';
+            }
+        }
+
+        function saveConfig() {
+            const name = DOM.get('configName').value.trim();
+            if (!name) {
+                alert('설정 이름을 입력해주세요.');
+                return;
+            }
+
+            const configs = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '{}');
+            configs[name] = getCurrentConfig();
+            localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(configs));
+            
+            alert(`'${name}' 설정이 저장되었습니다.`);
+            loadConfigs();
+            DOM.get('availableConfigs').value = name;
+        }
+
+        function loadConfig() {
+            const name = DOM.get('configName').value.trim();
+            if (!name) {
+                alert('불러올 설정 이름을 입력하거나 드롭다운에서 선택해주세요.');
+                return;
+            }
+
+            const configs = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '{}');
+            const config = configs[name];
+
+            if (config) {
+                applyConfig(config);
+            } else {
+                alert(`'${name}' 설정이 존재하지 않습니다.`);
+            }
+        }
+
+        function loadSelectedConfig() {
+            const name = DOM.get('availableConfigs').value;
+            if (name) {
+                DOM.get('configName').value = name;
+                loadConfig();
+            }
+        }
+
+        function deleteConfig() {
+            const name = DOM.get('configName').value.trim();
+            if (!name) {
+                alert('삭제할 설정 이름을 입력해주세요.');
+                return;
+            }
+
+            if (confirm(`'${name}' 설정을 정말 삭제하시겠습니까?`)) {
+                const configs = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY) || '{}');
+                delete configs[name];
+                localStorage.setItem(CONFIG.STORAGE_KEY, JSON.stringify(configs));
+                
+                alert(`'${name}' 설정이 삭제되었습니다.`);
+                loadConfigs();
+                DOM.get('configName').value = '';
+                applyConfig(getCurrentConfig()); 
+            }
+        }
+    </script>
+</body>
+</html>
